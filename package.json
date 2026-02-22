@@ -1,0 +1,18 @@
+{
+  "name": "defender",
+  "version": "1.0.0",
+  "description": "Williams Defender (1981) arcade clone — TypeScript + Canvas 2D",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "keywords": ["retrogame", "arcade", "defender", "williams"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}
