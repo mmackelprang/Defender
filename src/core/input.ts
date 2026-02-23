@@ -1,5 +1,6 @@
 export class InputManager {
   private keys = new Set<string>();
+  private justPressed = new Set<string>();
   private anyKeyFlag = false;
 
   constructor() {
@@ -8,11 +9,14 @@ export class InputManager {
   }
 
   private handleKeyDown = (e: KeyboardEvent): void => {
+    if (!this.keys.has(e.code)) {
+      this.justPressed.add(e.code);
+    }
     this.keys.add(e.code);
     this.anyKeyFlag = true;
 
     if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Space',
-         'KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyZ', 'KeyX', 'ShiftLeft'].includes(e.code)) {
+         'KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyZ', 'KeyX', 'ShiftLeft', 'ShiftRight'].includes(e.code)) {
       e.preventDefault();
     }
   };
@@ -25,12 +29,16 @@ export class InputManager {
     return this.keys.has(code);
   }
 
-  isAnyKeyPressed(): boolean {
-    if (this.anyKeyFlag) {
-      this.anyKeyFlag = false;
-      return true;
+  isAnyKeyPressed(code?: string): boolean {
+    if (code !== undefined) {
+      return this.justPressed.has(code);
     }
-    return false;
+    return this.anyKeyFlag;
+  }
+
+  endFrame(): void {
+    this.justPressed.clear();
+    this.anyKeyFlag = false;
   }
 
   destroy(): void {
